@@ -148,11 +148,14 @@ def solve_model(instructors_df, sections_df, coord_preferences_df, inst_preferen
 
         solution = np.zeros([len(instructor_codes), len(section_codes)])
         for i in instructor_codes:
+            count = 0
             for j in section_codes:
                 if x[i][j].x == 1:
+                    count += 1
                     resdf.loc[j] = [instructors_df["Instructor"].values[i], sections_df["Course"].values[j], sections_df["Day"].values[j], sections_df["Time"].values[j]]
             
-
+            if count != instructors_df['Max'].values[i]:
+                print("---- ", instructors_df["Instructor"].values[i], "is teaching", count, "classes with max =", instructors_df['Max'].values[i])
         resdf.to_excel(output_file)
 
 
